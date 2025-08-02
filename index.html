@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Company Review</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+      color: #eee;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 36px;
+      color: #ff4c4c;
+    }
+    img {
+      max-width: 300px;
+      margin: 20px auto;
+      border-radius: 8px;
+      border: 2px solid #555;
+    }
+    .input-field {
+      margin: 10px;
+    }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: none;
+      width: 250px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #ff4c4c;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #ff7373;
+    }
+    .review-box {
+      margin-top: 30px;
+      padding: 20px;
+      background: #2e2e2e;
+      border-radius: 10px;
+    }
+    .timestamp {
+      font-size: 14px;
+      color: #999;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔥 Useless Company Roaster 🔥</h1>
+
+  <div class="input-field">
+    <input type="text" id="reviewerName" placeholder="Your Name">
+  </div>
+  <div class="input-field">
+    <input type="text" id="contactNumber" placeholder="Contact Number">
+  </div>
+
+  <button onclick="startReview()" id="reviewBtn">Get review</button>
+
+  <div class="review-box" id="reviewBox" style="display:none;">
+    <h2 id="companyName"></h2>
+    <img id="companyImg" src="" alt="Company Logo">
+    <p id="reviewText"></p>
+    <p>Rating: ⭐</p>
+    <div class="timestamp" id="timestamp"></div>
+    <p id="userInfo"></p>
+  </div>
+
+  <script>
+    let inUse = false;
+
+    const companies = [
+      {
+        name: "GitBOSCH Corp.",
+        image: "logo-08.6d782318.png"  // This image must be in the same folder
+      }
+    ];
+
+    const roasts = [
+      "They have meetings to schedule meetings about meetings.",
+      "The only thing agile here is how quickly they avoid responsibility.",
+      "Mission: Confuse. Vision: Unclear.",
+      "Even their coffee machine is outdated.",
+      "They innovate in finding new ways to be inefficient.",
+      "Every decision takes 3 weeks and a sacrifice to the printer god."
+    ];
+
+    function startReview() {
+      const name = document.getElementById("reviewerName").value.trim();
+      const contact = document.getElementById("contactNumber").value.trim();
+
+      if (inUse) {
+        alert("Only one reviewer allowed at a time. Wait your turn!");
+        return;
+      }
+
+      if (!name || !contact) {
+        alert("Please enter your name and contact number.");
+        return;
+      }
+
+      inUse = true;
+
+      const company = companies[0];
+      const roast = roasts[Math.floor(Math.random() * roasts.length)];
+
+      document.getElementById("companyName").textContent = company.name;
+      document.getElementById("companyImg").src = company.image;
+      document.getElementById("reviewText").textContent = roast;
+      document.getElementById("userInfo").textContent = `Reviewer: ${name} | Contact: ${contact}`;
+      document.getElementById("timestamp").textContent = `Reviewed at: ${new Date().toLocaleString()}`;
+      document.getElementById("reviewBox").style.display = "block";
+
+      // Optional: disable button for 10 seconds
+      document.getElementById("reviewBtn").disabled = true;
+      setTimeout(() => {
+        inUse = false;
+        document.getElementById("reviewBtn").disabled = false;
+      }, 10000);
+    }
+  </script>
+</body>
+</html>
